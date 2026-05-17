@@ -1,12 +1,10 @@
 const rawApiUrl = import.meta.env.VITE_API_URL?.trim()
-const isLocalHost =
-  typeof window !== 'undefined' &&
-  ['localhost', '127.0.0.1'].includes(window.location.hostname)
+const isBrowser = typeof window !== 'undefined'
 
 export const API_URL = rawApiUrl
   ? rawApiUrl.replace(/\/+$/, '')
-  : isLocalHost
-    ? 'http://localhost:3000'
+  : import.meta.env.DEV && isBrowser
+    ? `http://${window.location.hostname}:3000`
     : ''
 
 export function getApiUrl() {
